@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminApi\AdminAccessController;
 use App\Http\Controllers\AdminApi\AdminLoginController;
 use App\Http\Controllers\AdminApi\UserController;
+use App\Http\Controllers\AdminApi\AddController;
 use App\Http\Controllers\UserApi\CourseController;
 use App\Http\Controllers\UserApi\LoginController;
 use App\Http\Controllers\UserApi\LogoutController;
@@ -26,6 +27,10 @@ Route::middleware('auth:passport')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+
+Route::post('/admin/addCourse',[AddController::class,'addCourse']);
+Route::post('/admin/addSubject',[AddController::class,'addSubject']);
 
 
 Route::group(['middleware' => ['cors', 'json.response']], function () {
