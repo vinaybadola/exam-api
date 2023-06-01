@@ -21,8 +21,8 @@ return new class extends Migration
             $table->foreign('question_id')->references('id')->on('quizquestions');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedBigInteger('course_quiz_id');
-            $table->foreign('course_quiz_id')->references('id')->on('coursequizzes');
+            $table->unsignedBigInteger('subject_quiz_id');
+            $table->foreign('subject_quiz_id')->references('id')->on('subjectquizzes');
             $table->timestamps();
         });
     }
