@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('quizquestions', function (Blueprint $table) {
+        Schema::create('course_subjects', function (Blueprint $table) {
             $table->id();
-            $table->string('question_name');
-            $table->string('status');
-            $table->string('level');
-            $table->unsignedBigInteger('course_quiz_id');
-            $table->foreign('course_quiz_id')->references('id')->on('coursequizzes');
+            $table->string('subject_name');
+            $table->unsignedBigInteger('course_id');
+            $table->foreign('course_id')->references('id')->on('courses');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('quizquestions');
+        Schema::dropIfExists('course_subjects');
     }
 };

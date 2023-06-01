@@ -17,4 +17,10 @@ class ProfileController extends Controller
             return response()->json(['success'=> false, 'Message'=> 'User Not found try with your only First Name']);
         }
     }
+
+    public function updateProfile(){
+        
+    }
+
+    
 }

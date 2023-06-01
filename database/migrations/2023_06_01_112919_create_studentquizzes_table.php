@@ -14,15 +14,15 @@ return new class extends Migration
     public function up()
     {
         Schema::create('studentquizzes', function (Blueprint $table) {
-            $table->id();
+            $table->id();     
             $table->string('marks');
             $table->string('attempt');
             $table->dateTime('started_at');
             $table->dateTime('finished_at');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedBigInteger('course_quiz_id');
-            $table->foreign('course_quiz_id')->references('id')->on('coursequizzes');
+            $table->unsignedBigInteger('subject_quiz_id');
+            $table->foreign('subject_quiz_id')->references('id')->on('subjectquizzes');
             $table->timestamps();
         });
     }
