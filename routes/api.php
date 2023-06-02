@@ -50,7 +50,13 @@ Route::middleware('auth:api')->group(function () {
 });
 
 
-Route::post("/user/quiz", [CourseController::class, 'getcoursequizzes']);
+//! ALL Courses related APIs
+Route::post("/user/subject", [CourseController::class, 'getcoursequizzes']);
+Route::post("/user/subject/quiz", [CourseController::class, 'getSubjectQuizzes']);
+
+
+
+
 
 Route::post("admin/login", [AdminLoginController::class, 'adminlogin']);
 
