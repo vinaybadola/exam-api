@@ -5,7 +5,7 @@ namespace App\Http\Controllers\AdminApi;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Course;
-use App\Models\Subject;
+use App\Models\subjectquiz;
 use Validator;
 
 
@@ -69,6 +69,28 @@ class AddController extends Controller
 
     public function addSubjectQuiz(Request $request)
     {
+        $validation=Validator::make($request->all(),[
+            'course_quiz_name' =>'required|unique:subjectquizzes,course_quiz_name',
+            'subject_quiz_id'=> 'required'
+        ]);
+
+        if($validation->fails())
+        {
+            return response()->json(['errors' => $validation->errors()->all()]);
+        }
         
+
+        $subject=new subjectquiz();
+        $subject->course_quiz_name=$request->course_quiz_name;
+        $subject->subject_quiz_id=$request->subject_quiz_id;
+
+        if($subject->save())
+        {
+
+            return response()->json(['message' => 'Subject Added successfully', 'status' => 200]);
+        }
+        else{
+            return response()->json(["message" => "Some Error Ocuured"]);
+        }
     }
 }
