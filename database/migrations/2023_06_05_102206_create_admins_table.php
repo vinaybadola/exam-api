@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('quizquestionattempts', function (Blueprint $table) {
+        Schema::create('admins', function (Blueprint $table) {
             $table->id();
-            $table->string('selected_ans');
-            $table->unsignedBigInteger('student_quiz_id');
-            $table->foreign('student_quiz_id')->references('id')->on('studentquizzes');
-            $table->unsignedBigInteger('question_id');
-            $table->foreign('question_id')->references('id')->on('quizquestions');
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->unsignedBigInteger("college_id");
+            $table->foreign('college_id')->references('id')->on("college_names");
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('quizquestionattempts');
+        Schema::dropIfExists('admins');
     }
 };
