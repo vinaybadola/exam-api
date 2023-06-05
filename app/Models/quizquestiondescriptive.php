@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class quizquestiondescriptive extends Model
+class QuizQuestionDescriptive extends Model
 {
     use HasFactory;
 }
