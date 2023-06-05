@@ -23,7 +23,8 @@ class RegisterController extends Controller
             'alternate_contact' => 'integer',
             'college_name' => 'required| string',
             'status', 
-            'course_id'=> 'required'
+            'course_id'=> 'required',
+            'college_id'=> 'required'
             
             
 
