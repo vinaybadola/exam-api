@@ -34,7 +34,7 @@ class CourseController extends Controller
      }
 
 
-     //! Today's Task: fix this error
+    
      public function getSubjectQuizzes(Request $request){
 
           $subjectquiz = $request->subject_quiz_id;
@@ -48,6 +48,8 @@ class CourseController extends Controller
 
           }
      }
+
+     
      
 
 }
