@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('subject_quizzes', function (Blueprint $table) {
             $table->id();
             $table->string('subject_quiz_name');
-            $table->unsignedBigInteger('subject_quiz_id');
-            $table->foreign('subject_quiz_id')->references('id')->on('college_subjects');
+            $table->unsignedBigInteger('college_subject_id');
+            $table->foreign('college_subject_id')->references('id')->on('college_subjects');
             $table->timestamps();
         });
     }

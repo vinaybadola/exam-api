@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('status');
             $table->unsignedBigInteger('course_id');
             $table->foreign('course_id')->references('id')->on('courses');
+            $table->rememberToken();
             $table->timestamps();
         });
     }
