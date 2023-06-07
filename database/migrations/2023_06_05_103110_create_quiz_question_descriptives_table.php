@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('quiz_question_descriptives', function (Blueprint $table) {
             $table->id();
             $table->string('user_ans')->default('null');
-           
             $table->unsignedBigInteger('question_id');
             $table->foreign('question_id')->references('id')->on('quiz_questions');
             $table->unsignedBigInteger('user_id');

@@ -21,7 +21,6 @@ class RegisterController extends Controller
             'date_of_birth' => 'required|string',
             'contact'=> 'required',
             'alternate_contact' => 'integer',
-            'college_name' => 'required| string',
             'status', 
             'course_id'=> 'required',
             'college_id'=> 'required'
@@ -42,9 +41,9 @@ class RegisterController extends Controller
         $user->date_of_birth = $request->date_of_birth;
         $user->contact = $request->contact;
         $user->alternate_contact = $request->alternate_contact;
-        $user->college_name = $request->college_name;
         $user->status  = $request->status;
         $user->course_id = $request->course_id;
+        $user->college_id = $request->college_id;
         $user->remember_token = Str::random(10);
         $token = $user->createToken('Laravel Password Grant Client')->accessToken;
 
