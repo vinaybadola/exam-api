@@ -15,43 +15,62 @@ class CourseController extends Controller
   protected function getCollegeCourses(Request $request)
   {
     $clgId = $request->college_id;
-    $courses  = Course::find($clgId);
-    $getCourses = $courses->course_name;
-    if (!empty($getCourses) ){
-      return response()->json([$courses, 'Message' => "Success", "status" => true]);
+    $courses = Course::find($clgId);
+    
+    if (!$courses ){
+      return response()->json([ 'Message' => "Course Not Found", "status" => false]);
 
      }
-     else  {
-      return response()->json(['Message' => "No Courses Found ", "status" => false]);
-    }
-   
+
+     $showCourse = Course::where("college_id", $clgId)->get();
+     return response()->json([
+      "status" => true,
+       "data" => $showCourse, 
+     
+      
+    ]);
+     
+    //  if($getCourses->isEmpty()) {
+    //   return response()->json(['Message' => "No Courses Found on this id  ", "status" => false]);
+    // }
+    
   }
-
-
 
   protected function getCourseSubjects(Request $request)
   {
-    $subject = $request->course_id;
-    $getSubject = CollegeSubject::where('course_id', $subject)->get('subject_name');
-    if ($getSubject) {
-      return response()->json([$getSubject, 'Message' => "Success", "status" => true]);
-    } else {
-      return response()->json(['Message' => "No subject Found ", "status" => false]);
-    }
+    $courseId = $request->course_id;
+    $courseSubject = CollegeSubject::find($courseId);
+
+    if (!$courseSubject ){
+      return response()->json([ 'Message' => "subjects Not Found", "status" => false]);
+
+     }
+
+
+
+    $getSubject = CollegeSubject::where('course_id', $courseId)->get();
+    return response()->json([
+      "status" => true,
+      "data" => $getSubject, 
+      ]); 
   }
-
-
 
   protected function getSubjectQuizzes(Request $request)
   {
 
-    $subjectquiz = $request->college_subject_id;
-    $getSubjectQuiz = SubjectQuiz::where('subject_quiz_id', $subjectquiz)->get("subject_quiz_name");
+    $subjectQuiz = $request->college_subject_id;
+    $findSubjectQuiz = SubjectQuiz::find($subjectQuiz);
+    // return $findSubjectQuiz;
 
-    if ($getSubjectQuiz) {
-      return response()->json([$getSubjectQuiz, 'Message' => "Success", "status" => 200]);
-    } else {
-      return response()->json(['Message' => "No subject Quiz Found ", "status" => 400]);
+    if (!$findSubjectQuiz ){
+      return response()->json([ 'Message' => "subjects Quizes Not Found", "status" => false]);
     }
+      
+    $getSubjectQuiz = SubjectQuiz::where('college_subject_id', $subjectQuiz)->get();
+    return response()->json([
+      'Message' => "Success", 
+       $getSubjectQuiz, 
+    ]);
+    
   }
 }
