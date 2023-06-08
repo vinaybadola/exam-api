@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminApi\AdminAccessController;
 use App\Http\Controllers\AdminApi\AdminLoginController;
 use App\Http\Controllers\AdminApi\UserController;
+use App\Http\Controllers\AdminApi\AddCollegeController;
 use App\Http\Controllers\AdminApi\AddController;
 use App\Http\Controllers\UserApi\CollegeController;
 use App\Http\Controllers\UserApi\CourseController;
@@ -29,10 +30,17 @@ Route::middleware('auth:passport')->get('/user', function (Request $request) {
 });
 
 
+Route::post('/admin/addCollege',[AddCollegeController::class,'addCollege']);
+Route::get('/admin/getCollege',[AddCollegeController::class,'getCollege']);
+
 
 Route::post('/admin/addCourse',[AddController::class,'addCourse']);
 Route::post('/admin/addSubject',[AddController::class,'addSubject']);
 
+Route::post('/admin/addSubjectQuiz',[AddController::class,'addSubjectQuiz']);
+
+Route::post('/admin/addQuestion',[AddQuestionController::class,'addQuestion']);
+Route::post('/admin/addAnswer',[AddAnswerController::class,'addAnswer']);
 
 Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::post("/user/register", [RegisterController::class , 'register']);
