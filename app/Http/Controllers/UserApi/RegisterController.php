@@ -24,9 +24,6 @@ class RegisterController extends Controller
             'college_name' => 'required| string',
             'status', 
             'course_id'=> 'required'
-            
-            
-
 
         ]);
         if ($validator->fails())
