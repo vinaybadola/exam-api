@@ -5,8 +5,15 @@ namespace App\Http\Controllers\AdminApi;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Course;
+<<<<<<< HEAD
 use App\Models\subjectquiz;
 use Validator;
+=======
+use App\Models\Courses;
+use App\Models\Subject;
+use App\Models\SubjectQuiz;
+use Illuminate\Support\Facades\Validator;
+>>>>>>> 1d18ce40808450f2e27cf90fb5e5b1dc2e4285e4
 
 
 class AddController extends Controller
@@ -52,7 +59,7 @@ class AddController extends Controller
             return response()->json(['errors' => $validation->errors()->all()]);
         }
         
-        $subject=new Subject();
+        $subject=new SubjectQuiz();
         $subject->subject_name=$request->subject_name;
         $subject->course_id=$request->course_id;
 

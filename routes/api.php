@@ -5,8 +5,7 @@ use App\Http\Controllers\AdminApi\AdminLoginController;
 use App\Http\Controllers\AdminApi\UserController;
 use App\Http\Controllers\AdminApi\AddCollegeController;
 use App\Http\Controllers\AdminApi\AddController;
-use App\Http\Controllers\AdminApi\AddQuestionController;
-use App\Http\Controllers\AdminApi\AddAnswerController;
+use App\Http\Controllers\UserApi\CollegeController;
 use App\Http\Controllers\UserApi\CourseController;
 use App\Http\Controllers\UserApi\LoginController;
 use App\Http\Controllers\UserApi\LogoutController;
@@ -61,8 +60,10 @@ Route::middleware('auth:api')->group(function () {
 
 
 //! ALL Courses related APIs
-Route::post("/user/subject", [CourseController::class, 'getcoursequizzes']);
-Route::post("/user/subject/quiz", [CourseController::class, 'getSubjectQuizzes']);
+Route::get("user/colleges/all", [CollegeController::class, "getCollegeName"]);
+Route::post("user/courses/all", [CourseController::class, "getCollegeCourses"]);
+Route::post("/user/course/subject",[CourseController::class, "getCourseSubjects"]);
+Route::post("/user/course/subject/quiz", [CourseController::class, 'getSubjectQuizzes']);
 
 
 

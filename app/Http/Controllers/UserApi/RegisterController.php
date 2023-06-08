@@ -21,9 +21,12 @@ class RegisterController extends Controller
             'date_of_birth' => 'required|string',
             'contact'=> 'required',
             'alternate_contact' => 'integer',
-            'college_name' => 'required| string',
             'status', 
-            'course_id'=> 'required'
+            'course_id'=> 'required',
+            'college_id'=> 'required'
+            
+            
+
 
         ]);
         if ($validator->fails())
@@ -38,18 +41,18 @@ class RegisterController extends Controller
         $user->date_of_birth = $request->date_of_birth;
         $user->contact = $request->contact;
         $user->alternate_contact = $request->alternate_contact;
-        $user->college_name = $request->college_name;
         $user->status  = $request->status;
         $user->course_id = $request->course_id;
+        $user->college_id = $request->college_id;
         $user->remember_token = Str::random(10);
         $token = $user->createToken('Laravel Password Grant Client')->accessToken;
 
         if($user->save()){
-            $response = ['token' => $token];
-            return response()->json([ $response, 'message' => 'success', 'status' => 200]);
+           
+            return response()->json([ 'message' => 'ok', "token"=> $token, "data"=>  $user, ]);
         }
         else{
-            return response()->json(["message" => "Some Error Ocuured"]);
+            return response()->json(["message" => "Some Error Ocuured", 'status' => false]);
         }
 
 
