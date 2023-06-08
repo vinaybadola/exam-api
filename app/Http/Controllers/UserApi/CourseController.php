@@ -28,7 +28,7 @@ class CourseController extends Controller
         return response()->json(['Message' => "No Courses Found on this id  ", "status" => false]);
        }
       return response()->json([
-      "message" => "ok",
+      "status" => true,
        "data" => $showCourse, 
     ]);
      
@@ -53,12 +53,12 @@ class CourseController extends Controller
       return response()->json(['Message' => "No Subjects Found on this id ", "status" => false]);
       }
        return response()->json([
-      "message" => "ok",
-      "data" => $getSubject, 
+        "status" => true,
+        "data" => $getSubject, 
       ]); 
   }
 
-  
+
   protected function getSubjectQuizzes(Request $request)
   {
 

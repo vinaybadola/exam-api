@@ -49,7 +49,7 @@ class RegisterController extends Controller
 
         if($user->save()){
            
-            return response()->json([ 'message' => 'ok', "token"=> $token, "data"=>  $user, ]);
+            return response()->json([ "status" => true,  "token"=> $token, "data"=>  $user, ]);
         }
         else{
             return response()->json(["message" => "Some Error Ocuured", 'status' => false]);
