@@ -70,15 +70,17 @@ class CourseController extends Controller
       return response()->json([ 'Message' => "subjects Quizes Not Found", "status" => false]);
     }
       
-    $getSubjectQuiz = SubjectQuiz::where('college_subject_id', $subjectQuiz)->get();
+    $getSubjectQuiz = SubjectQuiz::where('subject_quiz_id', $subjectQuiz)->get();
+
     if($getSubjectQuiz->isEmpty()) {
       return response()->json(['Message' => "No Quizzes Found on this id ", "status" => false ]);
     }
-
-    return response()->json([
-      'Message' => "ok", 
+    else{
+      return response()->json([
+       "status" => true,
        $getSubjectQuiz, 
     ]);
+    }
     
   }
 }
