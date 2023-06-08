@@ -23,16 +23,16 @@ class CourseController extends Controller
      }
 
      $showCourse = Course::where("college_id", $clgId)->get();
-     return response()->json([
+
+     if($showCourse->isEmpty()) {
+        return response()->json(['Message' => "No Courses Found on this id  ", "status" => false]);
+       }
+      return response()->json([
       "message" => "ok",
        "data" => $showCourse, 
-     
-      
     ]);
      
-    //  if($getCourses->isEmpty()) {
-    //   return response()->json(['Message' => "No Courses Found on this id  ", "status" => false]);
-    // }
+    
     
   }
 
@@ -49,12 +49,16 @@ class CourseController extends Controller
 
 
     $getSubject = CollegeSubject::where('course_id', $courseId)->get();
-    return response()->json([
+    if($getSubject->isEmpty()) {
+      return response()->json(['Message' => "No Subjects Found on this id ", "status" => false]);
+      }
+       return response()->json([
       "message" => "ok",
       "data" => $getSubject, 
       ]); 
   }
 
+  
   protected function getSubjectQuizzes(Request $request)
   {
 
@@ -67,6 +71,10 @@ class CourseController extends Controller
     }
       
     $getSubjectQuiz = SubjectQuiz::where('college_subject_id', $subjectQuiz)->get();
+    if($getSubjectQuiz->isEmpty()) {
+      return response()->json(['Message' => "No Quizzes Found on this id ", "status" => false ]);
+    }
+
     return response()->json([
       'Message' => "ok", 
        $getSubjectQuiz, 

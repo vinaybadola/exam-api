@@ -48,8 +48,8 @@ class RegisterController extends Controller
         $token = $user->createToken('Laravel Password Grant Client')->accessToken;
 
         if($user->save()){
-            $response = ['token' => $token , ];
-            return response()->json([ $response, "data"=>  $user, 'message' => 'ok', 'status' => true]);
+           
+            return response()->json([ 'message' => 'ok', "token"=> $token, "data"=>  $user, ]);
         }
         else{
             return response()->json(["message" => "Some Error Ocuured", 'status' => false]);
