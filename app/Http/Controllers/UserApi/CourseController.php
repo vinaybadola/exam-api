@@ -24,7 +24,7 @@ class CourseController extends Controller
 
      $showCourse = Course::where("college_id", $clgId)->get();
      return response()->json([
-      "status" => true,
+      "message" => "ok",
        "data" => $showCourse, 
      
       
@@ -50,7 +50,7 @@ class CourseController extends Controller
 
     $getSubject = CollegeSubject::where('course_id', $courseId)->get();
     return response()->json([
-      "status" => true,
+      "message" => "ok",
       "data" => $getSubject, 
       ]); 
   }
@@ -68,7 +68,7 @@ class CourseController extends Controller
       
     $getSubjectQuiz = SubjectQuiz::where('college_subject_id', $subjectQuiz)->get();
     return response()->json([
-      'Message' => "Success", 
+      'Message' => "ok", 
        $getSubjectQuiz, 
     ]);
     
