@@ -24,17 +24,17 @@ class LoginController extends Controller
         if($user){
             if(Hash::check($request->password, $user->password)){
                 $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-                $response = ['token', $token];
-                return response($response , $status = true);
+                return response()->json(["status" => true , "token"=>  'Bearer ' .  $token, "data" => $user]);
+               
             }
             else{
-                $response = ["message" => "Password mismatch"];
-            return response($response, $status= false);
+                return response()->json(["status" => false,  "message"=> "Password Mismatch"]);
+              
             }
         }
         else{
-            $response = ["message" =>'User does not exist'];
-            return response($response, $status = false);
+            return response()->json(["status" => false,  "message"=> "User does not exist"]);
+            
         }
 
      }

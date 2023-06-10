@@ -14,7 +14,7 @@ class CollegeController extends Controller
             return response()->json(["status"=> false, "Message" => "No College Found"]);
         }
         return response()->json([
-            "status" =>  true,
+            "status" => true,
              "data" => $clgName
 
         ]);
