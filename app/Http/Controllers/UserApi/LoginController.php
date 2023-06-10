@@ -24,7 +24,7 @@ class LoginController extends Controller
         if($user){
             if(Hash::check($request->password, $user->password)){
                 $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-                return response()->json(["status" => true , "token" => $token, "data" => $user]);
+                return response()->json(["status" => true , "token"=>  'Bearer ' .  $token, "data" => $user]);
                
             }
             else{

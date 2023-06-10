@@ -38,24 +38,23 @@ class CourseController extends Controller
 
   protected function getCourseSubjects(Request $request)
   {
-    $courseId = $request->course_id;
-    $courseSubject = CollegeSubject::find($courseId);
-
-    if (!$courseSubject ){
+    $response = $request->user();
+    $getCourseId=  $response->course_id;
+   
+    if(!$getCourseId){
       return response()->json([ 'Message' => "subjects Not Found", "status" => false]);
+   
+    }
+    $courseSubjects = CollegeSubject::where("course_id", $getCourseId)->get();
+    $getCoursename = course::where("id", $getCourseId)->pluck("course_name");
+    $csname = $getCoursename->toArray();
+    if($courseSubjects->isEmpty()) {
+      return response()->json(['Message' => "No Subjects Found on this id  ", "status" => false]);
+    }
+    //return response()->json(["status" => true, "course_name" => $getCoursename,  "data" => $courseSubjects]);
+    return response()->json([ "course_name" =>   $csname  , "status"=> true ,  "data" => $courseSubjects ]);
 
-     }
-
-
-
-    $getSubject = CollegeSubject::where('course_id', $courseId)->get();
-    if($getSubject->isEmpty()) {
-      return response()->json(['Message' => "No Subjects Found on this id ", "status" => false]);
-      }
-       return response()->json([
-        "status" => true,
-        "data" => $getSubject, 
-      ]); 
+    
   }
 
 
@@ -70,7 +69,7 @@ class CourseController extends Controller
       return response()->json([ 'Message' => "subjects Quizes Not Found", "status" => false]);
     }
       
-    $getSubjectQuiz = SubjectQuiz::where('subject_quiz_id', $subjectQuiz)->get();
+    $getSubjectQuiz = SubjectQuiz::with('quizdescription')->where('college_subject_id', $subjectQuiz)->get();
 
     if($getSubjectQuiz->isEmpty()) {
       return response()->json(['Message' => "No Quizzes Found on this id ", "status" => false ]);
@@ -78,7 +77,7 @@ class CourseController extends Controller
     else{
       return response()->json([
        "status" => true,
-       $getSubjectQuiz, 
+       "data" => $getSubjectQuiz, 
     ]);
     }
     

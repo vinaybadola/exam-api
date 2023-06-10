@@ -18,9 +18,17 @@ class ProfileController extends Controller
         }
     }
 
-    public function updateProfile(){
-        
+    public function getprofile(Request $request){
+        $response =  $request->user();
+        if(!$response){
+             return response() ->json(["Status" => false , "Message" =>  " User Not found"]);
+        }
+        return response()->json([ 'status' => true , 'data' => [$response] ]);
+        }
+
     }
 
+  
+
     
-}
+
