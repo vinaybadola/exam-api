@@ -9,6 +9,7 @@ use App\Http\Controllers\UserApi\CollegeController;
 use App\Http\Controllers\UserApi\CourseController;
 use App\Http\Controllers\UserApi\LoginController;
 use App\Http\Controllers\UserApi\LogoutController;
+use App\Http\Controllers\UserApi\NextQuestionController;
 use App\Http\Controllers\UserApi\ProfileController;
 use App\Http\Controllers\UserApi\QuestionController;
 use App\Http\Controllers\UserApi\RegisterController;
@@ -32,6 +33,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/user', [ProfileController::class, "getprofile"]);
     Route::post("/user/course/subject",[CourseController::class, "getCourseSubjects"]);
     Route::post("/user/course/subject/quiz", [CourseController::class, 'getSubjectQuizzes']);
+    Route::post("/users/questions/all", [QuestionController::class, "getQuestion"]);
+    Route::post("/users/fetch-next-question", [NextQuestionController::class, "getNextQuestion"]);
     
 });
 
@@ -77,7 +80,7 @@ Route::post("user/courses/all", [CourseController::class, "getCollegeCourses"]);
 
 
 
-Route::post("/user/course/subject/quiz/questions", [QuestionController::class, "getQuestion"]);
+//Route::post("/user/course/subject/quiz/questions", [QuestionController::class, "getQuestion"]);
 
 
 //!  Add the below api in admin group middleware

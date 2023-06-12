@@ -11,4 +11,9 @@ class QuizAnswer extends Model
     public function quizQuestion(){
         return $this->belongsTo(QuizQuestion::class , 'quiz_question_id');
     }
+
+    protected $hidden = [
+        'correct_answer',
+        'remember_token',
+    ];
 }
