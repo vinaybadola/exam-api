@@ -12,5 +12,9 @@ class QuizQuestion extends Model
         return $this->hasMany(QuizAnswer::class , 'question_id');
     }
 
+    public function quizQuestionAttempts(){
+        return $this->belongsToMany(QuizQuestionAttempt::class , 'question_id');
+    }
+
    
 }
