@@ -11,30 +11,18 @@ use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
-    public function getQuestion(Request $request){
-        
-        $userId = $request->user()->id;
-        $question = $request->subject_quiz_id;
-
-        $store = new StudentQuiz();
-        $store->marks = "";
-        $store->attempt = 0;
-        $store->started_at = now();
-        $store->finished_at = now();
-        $store->user_id = $userId;
-        $store->subject_quiz_id = $question;
-        if(!$store->save()){
-              return response()->json(["Message" => "Some Error Occured", "status" => false]);
-        }
-
-        $store->save();
-
-        $getquestion = quizquestion::with('quizAnswers')->where("subject_quiz_id", $question)->limit(1)->get();
+    public function getQuestion(Request $request){  
+        $subjectQuizId = $request->subject_quiz_id;
+        $getquestion = quizquestion::with('quizAnswers')->where("subject_quiz_id", $subjectQuizId)->limit(1)->get();
+        $questionCount = quizquestion::where('subject_quiz_id', $subjectQuizId )->count();
+      
+      
+       
         if(!$getquestion){
             return response()->json(["status"=> false, "Message" => "No Question Found on this ID"]);
         }
 
-        return response()->json(["status" => true , "data" => $getquestion]);
+        return response()->json(["status" => true , "data" => $getquestion, "count" => $questionCount]);
                            
 
     }

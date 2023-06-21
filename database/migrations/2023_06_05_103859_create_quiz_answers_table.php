@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('option2');
             $table->string('option3');
             $table->string('option4');
-            $table->string('correct_answer');
+            $table->integer('correct_answer');
             $table->unsignedBigInteger('question_id');
             $table->foreign('question_id')->references('id')->on('quiz_questions');
             $table->unsignedBigInteger('subject_quiz_id');

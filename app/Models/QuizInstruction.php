@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class QuizInstruction extends Model
 {
     use HasFactory;
+    public function subjectQuiz(){
+        return $this->hasOne(SubjectQuiz::class , "subject_quiz_id");
+
+    }
 }

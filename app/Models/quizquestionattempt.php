@@ -13,6 +13,11 @@ class QuizQuestionAttempt extends Model
     }
 
     public function quizQuestion(){
-        return $this->belongsToMany(QuizQuestion::class, "question_id");
+        return $this->belongsToMany(QuizQuestion::class);
+    }
+
+    public function answer()
+    {
+        return $this->belongsTo(QuizAnswer::class, 'question_id', 'question_id');
     }
 }

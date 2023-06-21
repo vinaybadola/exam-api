@@ -11,4 +11,8 @@ class SubjectQuiz extends Model
     public function quizdescription(){
         return $this->hasOne(QuizDescription::class, "subject_quiz_id");
     }
+
+    public function quizInstruction(){
+        return $this->hasOne(QuizInstruction::class, "subject_quiz_id");
+    }
 }

@@ -5,38 +5,37 @@ use App\Http\Controllers\AdminApi\AdminLoginController;
 use App\Http\Controllers\AdminApi\UserController;
 use App\Http\Controllers\AdminApi\AddCollegeController;
 use App\Http\Controllers\AdminApi\AddController;
+use App\Http\Controllers\QuizStartController;
 use App\Http\Controllers\UserApi\CollegeController;
 use App\Http\Controllers\UserApi\CourseController;
+use App\Http\Controllers\UserApi\FetchParticularQuestion;
 use App\Http\Controllers\UserApi\LoginController;
 use App\Http\Controllers\UserApi\LogoutController;
 use App\Http\Controllers\UserApi\NextQuestionController;
 use App\Http\Controllers\UserApi\ProfileController;
 use App\Http\Controllers\UserApi\QuestionController;
 use App\Http\Controllers\UserApi\RegisterController;
+use App\Http\Controllers\UserApi\ResultController;
+use App\Http\Controllers\UserApi\TestController;
 use App\Http\Controllers\UserApi\UpdateProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+
 
 Route::middleware('auth:api')->get('/user',  [ProfileController::class, "getprofile"]);
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/user', [ProfileController::class, "getprofile"]);
     Route::post("/user/course/subject",[CourseController::class, "getCourseSubjects"]);
     Route::post("/user/course/subject/quiz", [CourseController::class, 'getSubjectQuizzes']);
-    Route::post("/users/questions/all", [QuestionController::class, "getQuestion"]);
+    Route::post("/users/quiz-starts", [QuizStartController::class, "startQuiz"]);  // start-quiz
+    Route::post("/users/fetch-first-question", [QuestionController::class, "getQuestion"]); // 
     Route::post("/users/fetch-next-question", [NextQuestionController::class, "getNextQuestion"]);
-    
+    Route::post("users/fetch-particular-question", [FetchParticularQuestion::class, "fetchparticularQuestion"]);                                                                                                                                            
+    Route::post("/test", [TestController::class, "getAttemptedQuestion"]);
+    Route::post("fetch-result", [ResultController::class, "result"]);
 });
+
 
 
 
@@ -71,7 +70,7 @@ Route::middleware('auth:api')->group(function () {
 });
 
 
-//! ALL Courses related APIs
+
 Route::get("user/colleges/all", [CollegeController::class, "getCollegeName"]);
 Route::post("user/courses/all", [CourseController::class, "getCollegeCourses"]);
 
@@ -80,13 +79,3 @@ Route::post("user/courses/all", [CourseController::class, "getCollegeCourses"]);
 
 
 
-//Route::post("/user/course/subject/quiz/questions", [QuestionController::class, "getQuestion"]);
-
-
-//!  Add the below api in admin group middleware
-
-
-
-Route::group(['prefix' => 'user', 'middleware' => ['auth:user-api', 'scopes:user', 'cors', 'json.response']], function(){
-             Route::get("/admin/dashboard", [AdminAccessController::class, "showAdminDashboard"]);
-});

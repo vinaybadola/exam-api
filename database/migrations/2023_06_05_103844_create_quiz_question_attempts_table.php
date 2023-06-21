@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('quiz_question_attempts', function (Blueprint $table) {
             $table->id();
-            $table->string('selected_ans');
+            $table->integer('selected_ans');
             $table->unsignedBigInteger('student_quiz_id');
             $table->foreign('student_quiz_id')->references('id')->on('student_quizzes');
             $table->unsignedBigInteger('question_id');

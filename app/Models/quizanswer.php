@@ -16,4 +16,9 @@ class QuizAnswer extends Model
         'correct_answer',
         'remember_token',
     ];
+
+    public function attempts()
+    {
+        return $this->hasMany(QuizQuestionAttempt::class, 'question_id', 'question_id');
+    }
 }
