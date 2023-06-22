@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('question_id');
             $table->foreign('question_id')->references('id')->on('quiz_questions');
             $table->timestamps();
+            $table->string("question_type");
         });
     }
 
