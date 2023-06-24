@@ -9,6 +9,7 @@ use App\Http\Controllers\QuizStartController;
 use App\Http\Controllers\UserApi\CollegeController;
 use App\Http\Controllers\UserApi\CourseController;
 use App\Http\Controllers\UserApi\FetchParticularQuestion;
+use App\Http\Controllers\UserApi\FinalResultController;
 use App\Http\Controllers\UserApi\LoginController;
 use App\Http\Controllers\UserApi\LogoutController;
 use App\Http\Controllers\UserApi\NextQuestionController;
@@ -20,13 +21,12 @@ use App\Http\Controllers\UserApi\TestController;
 use App\Http\Controllers\UserApi\UpdateProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
-
+use PhpParser\Node\Stmt\Finally_;
 
 Route::middleware('auth:api')->get('/user',  [ProfileController::class, "getprofile"]);
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/user', [ProfileController::class, "getprofile"]);
-    Route::post("/user/course/subject",[CourseController::class, "getCourseSubjects"]);
+    Route::post("/user/course/subject",[CourseController::class, "getCourseSubjects"]);  
     Route::post("/user/course/subject/quiz", [CourseController::class, 'getSubjectQuizzes']);
     Route::post("/users/quiz-starts", [QuizStartController::class, "startQuiz"]);  // start-quiz
     Route::post("/users/fetch-first-question", [QuestionController::class, "getQuestion"]); // 
@@ -34,6 +34,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post("users/fetch-particular-question", [FetchParticularQuestion::class, "fetchparticularQuestion"]);                                                                                                                                            
     Route::post("/test", [TestController::class, "getAttemptedQuestion"]);
     Route::post("fetch-result", [ResultController::class, "result"]);
+    Route::post('final-result', [FinalResultController::class, "finalResult"]);
 });
 
 

@@ -19,11 +19,11 @@ return new class extends Migration
             $table->foreign('question_id')->references('id')->on('quiz_questions');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('result');
-            $table->string('grade');
-            $table->string('correct');
-            $table->string('in_correct');
-            $table->string('no_attempt');
+            $table->string('result')->default(0);
+            $table->string('grade')->default(0);
+            $table->string('correct')->default(0);
+            $table->string('in_correct')->default(0);
+            $table->string('no_attempt')->default(0);
             $table->unsignedBigInteger('subject_quiz_id');
             $table->foreign('subject_quiz_id')->references('id')->on('college_subjects');
             $table->timestamps();

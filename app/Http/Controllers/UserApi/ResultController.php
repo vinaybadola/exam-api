@@ -15,20 +15,43 @@ class ResultController extends Controller
 {
      public function result(Request $request){
         $response = $request->user()->id; 
-        $studentQuizId = StudentQuiz::where('user_id', $response)->get('id')->last();
-        $id =  $studentQuizId->id;
-        //return $id;
+        //return $response;
+        $studentQuizId = StudentQuiz::where('user_id', $response)->pluck('id')->last();
         $subject_quiz_id = $request->subject_quiz_id;
 
-        $getQuestion = QuizQuestion::where('subject_quiz_id', $subject_quiz_id)->get("question_number");
+        $getQuestion = QuizQuestion::where('subject_quiz_id', $subject_quiz_id)->pluck("question_number");
+        // return $getQuestion;
 
-        $response = DB::table('quiz_question_attempts')
-                        ->join('quiz_answers', 'quiz_question_attempts.question_id', '=', 'quiz_answers.question_id')
-                        ->where('quiz_question_attempts.student_quiz_id', $id)
-                        ->select('quiz_question_attempts.selected_ans', 'quiz_answers.correct_answer')
-                        ->get();
+        $getResult = QuizQuestionAttempt::where('student_quiz_id', $studentQuizId)->get();
+       // return $getResult; 
+       $result = [
+         'question_id' => 0,
+         'correct' => 0,
+         'incorrect' => 0,
+         'no_attempt' => 0,
+     ];
+       foreach ($getResult as $attemptedQuestion) {
+         $questionId = $attemptedQuestion->question_id;
+         
+         $answer = QuizAnswer::where('question_id', $questionId)->where('subject_quiz_id', $subject_quiz_id)->first();
+         
+         if ($answer) {
+             if ($attemptedQuestion->selected_ans == $answer->correct_answer) {
+                $result['question_id'] = $questionId;
+                 $result['correct']++;
+             } else {
+               $result['question_id'] = $questionId;
+                 $result['incorrect']++;
+             }
+         } else {
+            $result['question_id'] = $questionId;
+             $result['no_attempt']++;
+         }
+     }
 
-                       // return $response;
+     return response()->json($result);
+
+
 
 
 
@@ -38,11 +61,10 @@ class ResultController extends Controller
                         $no_attempt= 0;
                         $result = 0;
 
-                   
                        $result = [];
-                        foreach ($response as $resp){
-                            if($resp->selected_ans == $resp->correct_answer){
-                           
+                        foreach ($getResult as $resp){
+                        if($resp->selected_ans == $resp->answer->correct_answer){
+                             
                              $correct++;
                             }
                         
@@ -52,31 +74,34 @@ class ResultController extends Controller
                             else{
                                $incorrect++;
                             }
-                            $result[] = [
-                              'correct' => $correct,
-                              'in-correct'=> $incorrect,
-                              'no-attempt' => $no_attempt,
-                          ];
-             
                          }  
 
-                         return response()->json($result);
+                         $result[] = [
+                           'correct' => $correct,
+                           'in-correct'=> $incorrect,
+                           'no-attempt' => $no_attempt,
+                       ];
 
-                         $result  = ($correct * 2);
-                         if ($result > 2) {
+                       // return response()->json($result);
+                       
+
+                         $score  = ($correct * 2);
+                         if ($score > 2) {
                            $grade = "Pass";
                         } else {
                            $grade = "Fail";
                         }
 
+                        return response()->json(["status" => true, "data" => $result, "total_question"=> $getQuestion, "result" => $grade ]);
+
                   
                         
-                        $store_quiz = new QuizResult();
-                        $store_quiz->result = $result;
-                        $store_quiz->marks = $grade;
-                        $store_quiz->correct = $correct;
-                        $store_quiz->Incorrect = $incorrect;
-                        $store_quiz->No_Attempt = $no_attempt;
-                        $store_quiz->save();
+                        // $store_quiz = new QuizResult();
+                        // $store_quiz->result = $result;
+                        // $store_quiz->marks = $grade;
+                        // $store_quiz->correct = $correct;
+                        // $store_quiz->Incorrect = $incorrect;
+                        // $store_quiz->No_Attempt = $no_attempt;
+                        // $store_quiz->save();
      }
 }

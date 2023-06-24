@@ -13,7 +13,7 @@ class QuizQuestion extends Model
     }
 
     public function quizQuestionAttempts(){
-        return $this->belongsToMany(QuizQuestionAttempt::class , 'question_id');
+        return $this->hasMany(QuizQuestionAttempt::class , 'question_id');
     }
 
     public function attempt()

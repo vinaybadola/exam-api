@@ -18,7 +18,7 @@ class NextQuestionController extends Controller
         $id =  $studentQuizId->id;
         $request->validate([
             'question_id' => 'required|exists:quiz_questions,id',
-            'option_id' => 'required',
+           
             'subject_quiz_id' => 'required',
             'question_type' => 'required|in:Objective,Descriptive'
         ]);

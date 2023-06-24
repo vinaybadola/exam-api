@@ -13,7 +13,7 @@ class QuizAnswer extends Model
     }
 
     protected $hidden = [
-        'correct_answer',
+        // 'correct_answer',
         'remember_token',
     ];
 
