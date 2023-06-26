@@ -14,6 +14,7 @@ class FinalResultController extends Controller
     public function finalResult(Request $request)
     {
         $response = $request->user()->id;
+       // return $response;
         $studentQuizId = StudentQuiz::where('user_id', $response)->pluck('id')->last();
         $subject_quiz_id = $request->subject_quiz_id;
 
@@ -21,7 +22,7 @@ class FinalResultController extends Controller
         // return $getQuestion;
 
         $getResult = QuizQuestionAttempt::with('answer')->where('student_quiz_id', $studentQuizId)->get();
-        //return $getResult; 
+       // return $getResult; 
 
         $questions=QuizQuestion::withCount(['quizQuestionAttempts'=>function($q)use($studentQuizId)
         {

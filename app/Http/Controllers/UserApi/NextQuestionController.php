@@ -16,9 +16,11 @@ class NextQuestionController extends Controller
         $user_id = $request->user()->id;
         $studentQuizId = StudentQuiz::where('user_id', $user_id)->get('id')->last();
         $id =  $studentQuizId->id;
+        if(!$id){
+            return response()->json(["status"=> false, 'message'=>'You have not taken any quiz yet'],401);
+        }
         $request->validate([
             'question_id' => 'required|exists:quiz_questions,id',
-           
             'subject_quiz_id' => 'required',
             'question_type' => 'required|in:Objective,Descriptive'
         ]);
@@ -70,9 +72,11 @@ class NextQuestionController extends Controller
         foreach($questions as $ques){
             $questionId = $ques->id;
             $attempted = $ques->attempt_count;
+            $question_number = $ques->question_number;
             $response[] = [
                 'question_id' => $questionId,
                 'attempted'=> $attempted, 
+                'question_number'=> $question_number,
             ];
 
         }

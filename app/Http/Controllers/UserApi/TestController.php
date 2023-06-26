@@ -14,29 +14,23 @@ class TestController extends Controller
 {
     public function getAttemptedQuestion(Request $request){
         $response = $request->user()->id; 
-
         $studentQuizId = StudentQuiz::where('user_id', $response)->get('id')->last();
         $id =  $studentQuizId->id;
-       // return $id;
 
         $request->validate([
             'subject_quiz_id' => 'required',
-            // 'question_type' => 'required|in:Objective,Descriptive'
         ]);
-    
+
         $subjectQuizId = $request->subject_quiz_id;
-        // $question_type = $request->question_type;
-        // $getQuestion = QuizQuestion::where('subject_quiz_id', $subjectQuizId)->get();
-       
-        // $questions=QuizQuestion::addSelect(['is_attempt' => QuizQuestionAttempt::selectRaw('count(*)')->where('student_quiz_id',$id)->whereColumn('question_id','quiz_questions.id')])->get();
-
-
         $questions=QuizQuestion::withCount(['attempt'=>function($q)use($id)
         {
             $q->where('student_quiz_id',$id);
         }])->where('subject_quiz_id', $subjectQuizId)->get();
 
-       // return $questions;
+
+        return $questions;
+
+         
 
         $response =[];
 
@@ -92,12 +86,4 @@ class TestController extends Controller
     //     return response()->json($response);
     }
 
-     public  function checkIfQuestionAttempted($getQuestionWithSelectedAns ){
-        if (isset($getQuestionWithSelectedAns['selected_ans']) && $getQuestionWithSelectedAns['selected_ans'] !== 0) {
-            return true;
-        }
-    
-        return false;
-    
-    }
 }
